@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using IosChange.Models;
+using Change.Web.Models;
 
-namespace IosChange.Controllers
+namespace Change.Web.Controllers
 {
     public class HomeController : Controller
     {

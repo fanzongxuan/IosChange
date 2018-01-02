@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Change.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace IosChange
+namespace Change.Web
 {
     public class Startup
     {
@@ -16,17 +18,30 @@ namespace IosChange
             Configuration = configuration;
         }
 
+        public IServiceProvider ServiceProvider { get; set; }
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            // mysql connection
+            var conn = Configuration.GetConnectionString("ChangeConnection");
+            services.AddDbContextPool<ChangeDbContext>(options => options.UseMySql(conn));
+
             services.AddMvc();
+
+            ServiceProvider = services.BuildServiceProvider();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            //database auto migration
+            var dbContext = ServiceProvider.GetService<ChangeDbContext>();
+            dbContext.Database.Migrate();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

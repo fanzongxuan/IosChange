@@ -1,6 +1,6 @@
 using System;
 
-namespace IosChange.Models
+namespace Change.Web.Models
 {
     public class ErrorViewModel
     {
