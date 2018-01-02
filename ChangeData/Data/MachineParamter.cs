@@ -6,6 +6,12 @@ namespace Change.Data.Data
 {
     public class MachineParamter : BaseEntity
     {
+
+        /// <summary>
+        /// 设备Id（FK）
+        /// </summary>
+        public int MachineId { get; set; }
+
         /// <summary>
         /// 设备名称c 
         /// </summary>
@@ -114,7 +120,7 @@ namespace Change.Data.Data
         /// <summary>
         /// 是否使用
         /// </summary>
-        public bool IsInUse { get; set; }
+        public bool Enable { get; set; }
 
         /// <summary>
         /// 创建时间

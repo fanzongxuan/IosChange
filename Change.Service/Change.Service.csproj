@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Change.Common\Change.Common.csproj" />
+    <ProjectReference Include="..\ChangeData\Change.Data.csproj" />
+  </ItemGroup>
+
 </Project>

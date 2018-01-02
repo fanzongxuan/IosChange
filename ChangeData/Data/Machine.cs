@@ -22,6 +22,11 @@ namespace Change.Data.Data
         public string MAC { get; set; }
 
         /// <summary>
+        /// 是否启用自定义参数
+        /// </summary>
+        public bool EnableMachineParaters { get; set; }
+
+        /// <summary>
         /// 参数列表
         /// </summary>
         public virtual ICollection<MachineParamter> MachineParamters { get; set; } = new List<MachineParamter>();

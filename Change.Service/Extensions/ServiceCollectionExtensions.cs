@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Change.Service.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Change.Service.Extensions
 {
@@ -9,7 +10,7 @@ namespace Change.Service.Extensions
     {
         public static void AddMyServices(this IServiceCollection services)
         {
-
+            services.AddScoped<IMachineService, MachineService>();
         }
     }
 }
