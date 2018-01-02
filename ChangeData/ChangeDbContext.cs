@@ -7,6 +7,8 @@ namespace Change.Data
     {
         public DbSet<Machine> Machine { get; set; }
 
+        public DbSet<MachineParamter> MachineParamter { get; set; }
+
         public ChangeDbContext(DbContextOptions<ChangeDbContext> options) : base(options)
         {
         }

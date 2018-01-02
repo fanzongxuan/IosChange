@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Change.Data;
+using Change.Service.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +27,9 @@ namespace Change.Web
             // mysql connection
             var conn = Configuration.GetConnectionString("ChangeConnection");
             services.AddDbContextPool<ChangeDbContext>(options => options.UseMySql(conn));
+
+            //my services
+            services.AddMyServices();
 
             services.AddMvc();
 

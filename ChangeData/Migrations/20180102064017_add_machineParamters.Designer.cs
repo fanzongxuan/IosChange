@@ -11,9 +11,10 @@ using System;
 namespace Change.Data.Migrations
 {
     [DbContext(typeof(ChangeDbContext))]
-    partial class ChangeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180102064017_add_machineParamters")]
+    partial class add_machineParamters
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

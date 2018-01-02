@@ -22,39 +22,13 @@ namespace Change.Data.Data
         public string MAC { get; set; }
 
         /// <summary>
+        /// 参数列表
+        /// </summary>
+        public virtual ICollection<MachineParamter> MachineParamters { get; set; } = new List<MachineParamter>();
+
+        /// <summary>
         /// 创建时间
         /// </summary>
         public DateTime CreateTime { get; set; }
-
-        ///// <summary>
-        ///// 设备名称
-        ///// </summary>
-        //public string Name { get; set; }
-
-        ///// <summary>
-        ///// 设备本地名称
-        ///// </summary>
-        //public string LocalName { get; set; }
-
-        ///// <summary>
-        ///// 设备系统名称
-        ///// </summary>
-        //public string SystemName { get; set; }
-
-        ///// <summary>
-        ///// UUID
-        ///// </summary>
-        //public string UUID { get; set; }
-
-        ///// <summary>
-        ///// IDFV
-        ///// </summary>
-        //public string IDFV { get; set; }
-
-        ///// <summary>
-        ///// 系统版本
-        ///// </summary>
-        //public string SystemVersion { get; set; }
-
     }
 }

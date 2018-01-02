@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chane.Api", "Chane.Api\Chan
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{8DEA8D9E-DCC1-458F-839B-EB69D650BE92}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Change.Common", "Change.Common\Change.Common.csproj", "{87B604C7-06C9-43FB-AE28-C2E5F21B49CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{382F6B8D-55B8-47CE-B54E-3D63308887B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{382F6B8D-55B8-47CE-B54E-3D63308887B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{382F6B8D-55B8-47CE-B54E-3D63308887B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87B604C7-06C9-43FB-AE28-C2E5F21B49CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87B604C7-06C9-43FB-AE28-C2E5F21B49CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87B604C7-06C9-43FB-AE28-C2E5F21B49CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87B604C7-06C9-43FB-AE28-C2E5F21B49CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +60,7 @@ Global
 		{0B889980-860A-4D79-8E51-7D4AA9319745} = {556574C9-3363-4528-BB08-C4D252FCD366}
 		{B23511C2-1897-4E15-842A-6F7F50DA211A} = {A33C8E40-907E-497D-85ED-1E7CDB621DBF}
 		{382F6B8D-55B8-47CE-B54E-3D63308887B3} = {C85E52E4-0C03-47FC-B302-A77E5AED0FA8}
+		{87B604C7-06C9-43FB-AE28-C2E5F21B49CD} = {8DEA8D9E-DCC1-458F-839B-EB69D650BE92}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {73D19B48-06E8-4972-ADB8-D9BACF16F61A}
