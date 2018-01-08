@@ -26,6 +26,7 @@ namespace Change.Service.Services
                 machine.CreateTime = DateTime.Now;
                 _dbContext.Machine.Add(machine);
                 _dbContext.SaveChanges();
+
             }
             return machine;
         }
@@ -35,6 +36,8 @@ namespace Change.Service.Services
             if (paramter == null)
                 throw new ArgumentNullException("paramter");
 
+            paramter.CreateTime = DateTime.Now;
+            paramter.UpdateTime = DateTime.Now;
             _dbContext.MachineParamter.Add(paramter);
             _dbContext.SaveChanges();
             return paramter;
@@ -72,8 +75,11 @@ namespace Change.Service.Services
             }
         }
 
-        public MachineParamter GenerateMachineParamter()
+        public MachineParamter GenerateMachineParamter(int machineId)
         {
+            if (machineId == 0)
+                throw new ArgumentException("machineId不能为0");
+
             var guid = new Guid().ToString();
             //todo 机器参数生成待确定
             var entity = new MachineParamter()
@@ -100,6 +106,7 @@ namespace Change.Service.Services
                 IMEI = "IMEI" + guid,
                 SaleArea = "SaleArea" + guid,
                 Enable = false,
+                MachineId = machineId,
                 CreateTime = DateTime.Now,
                 UpdateTime = DateTime.Now
             };
@@ -114,6 +121,7 @@ namespace Change.Service.Services
             if (machineId == 0)
                 throw new ArgumentException("machineId 不能为0");
             var mahineParamter = _dbContext.MachineParamter.FirstOrDefault(x => x.IsDeleted == false && x.Enable == true && x.MachineId == machineId);
+
             return mahineParamter;
         }
 
@@ -167,7 +175,10 @@ namespace Change.Service.Services
         {
             if (machine == null)
                 throw new ArgumentNullException("machine");
-            _dbContext.Machine.Add(machine);
+            var entity = _dbContext.Machine.Find(machine.Id);
+            entity.IDFA = machine.IDFA;
+            entity.IDFV = machine.IDFV;
+            entity.MAC = machine.MAC;
             _dbContext.SaveChanges();
             return machine;
         }

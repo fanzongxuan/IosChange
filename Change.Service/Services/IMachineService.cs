@@ -63,7 +63,7 @@ namespace Change.Service.Services
         /// 随机生成机器参数
         /// </summary>
         /// <returns></returns>
-        MachineParamter GenerateMachineParamter();
+        MachineParamter GenerateMachineParamter(int machineId);
 
         /// <summary>
         /// 删除机器参数
@@ -81,8 +81,8 @@ namespace Change.Service.Services
         /// <summary>
         /// 启用机器记录
         /// </summary>
-        /// <param name="machineId"></param>
-        void SetMachineParamterEnable(int machineId);
+        /// <param name="id"></param>
+        void SetMachineParamterEnable(int id);
 
         #endregion
     }
