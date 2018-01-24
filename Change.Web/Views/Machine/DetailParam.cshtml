@@ -1,0 +1,175 @@
+﻿@model Change.Model.MachineParamterModel
+@using Change.Common.Extension
+@{
+    ViewData["Title"] = "详细信息";
+}
+
+<div class="header padding-top-30">
+    <ol class="breadcrumb">
+        <li>设备管理</li>
+        <li>设备列表</li>
+        <li>参数列表</li>
+        <li class="active">详细信息</li>
+    </ol>
+
+</div>
+<div id="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="card-title">
+                        <div class="title">
+                            详细信息
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    @using (Html.BeginForm("CreateParam", "Machine", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                        @Html.HiddenFor(x => x.Id)
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Name, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.LocalName, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.LocalName, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.SystemName, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.SystemName, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.DeviceModelName, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.DeviceModelName, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.UUID, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.UUID, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.IDFV, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.IDFV, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.SystemVersion, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.SystemVersion, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.IDFA, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.IDFA, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.MAC, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.MAC, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Type, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.Type, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Resolution, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.Resolution, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.ResolutionZoom, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.ResolutionZoom, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.CarrierStrName, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.CarrierStrName, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.BatteryStatusName, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.BatteryStatusName, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.BatteryLevel, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.BatteryLevel, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.MachineTag, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.MachineTag, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.ScreenBrightness, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.ScreenBrightness, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.WifiName, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.WifiName, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.NetWorkTypeName, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.NetWorkTypeName, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.LocalLanguage, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.LocalLanguage, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.IMEI, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.IMEI, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.SaleArea, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.SaleArea, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Enable, new { @class = "col-sm-2 control-label" })
+                            <div class="col-md-8">
+                                @Html.DisplayFor(x => x.Enable, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

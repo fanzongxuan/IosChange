@@ -13,7 +13,7 @@ namespace Change.Data.Data
         public int MachineId { get; set; }
 
         /// <summary>
-        /// 设备名称c 
+        /// 设备名称
         /// </summary>
         public string Name { get; set; }
 
@@ -26,6 +26,11 @@ namespace Change.Data.Data
         /// 设备系统名称
         /// </summary>
         public string SystemName { get; set; }
+
+        /// <summary>
+        /// 设备机型：iPhone,iPad,iTouch 三种
+        /// </summary>
+        public DeviceModelEnum DeviceModel { get; set; }
 
         /// <summary>
         /// UUID
@@ -53,7 +58,7 @@ namespace Change.Data.Data
         public string MAC { get; set; }
 
         /// <summary>
-        /// 手机类型
+        /// 设备详细型号，iPhone 5,3
         /// </summary>
         public string Type { get; set; }
 
@@ -70,17 +75,17 @@ namespace Change.Data.Data
         /// <summary>
         /// 运营商
         /// </summary>
-        public string Operator { get; set; }
+        public CarrierNameEnum CarrierName { get; set; }
+        
+        /// <summary>
+        /// 电池状态，0 - 无法取得充电状态，1 - 非充电状态，2 - 充电状态，3 - 充满状态
+        /// </summary>
+        public BatteryStatusEnum BatteryStatus { get; set; }
 
         /// <summary>
-        /// 链接类型
+        /// 电池电量，不指定会自动随机 0.600000~0.800000 电量，如 0.670000
         /// </summary>
-        public string ConnectionType { get; set; }
-
-        /// <summary>
-        /// 电池状态
-        /// </summary>
-        public string BatteryStatus { get; set; }
+        public float BatteryLevel { get; set; }
 
         /// <summary>
         /// 设备标签
@@ -100,7 +105,7 @@ namespace Change.Data.Data
         /// <summary>
         /// 联网类型
         /// </summary>
-        public string NetWorkType { get; set; }
+        public NetWorkTypeEnum NetWorkType { get; set; }
 
         /// <summary>
         /// 本地语言

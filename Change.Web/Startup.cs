@@ -1,6 +1,8 @@
 ﻿using System;
+using Change.Common.ElasticSearch;
 using Change.Data;
 using Change.Service.Extensions;
+using Change.Web.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +25,9 @@ namespace Change.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Es configure
+            services.Configure<ESOptions>(Configuration.GetSection("ElasticSearch"));
+            services.AddSingleton<ESClientProvider>();
 
             // mysql connection
             var conn = Configuration.GetConnectionString("ChangeConnection");
@@ -53,13 +58,15 @@ namespace Change.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseMiddleware<ExceptionHandlerMiddleWare>();
+
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Machine}/{action=List}/{id?}");
             });
         }
     }

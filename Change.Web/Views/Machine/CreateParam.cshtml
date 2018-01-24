@@ -1,0 +1,52 @@
+﻿@model Change.Model.AddMachineParamterModel
+@{
+    ViewData["Title"] = "新增自定义参数";
+}
+
+<div class="header padding-top-30">
+    <ol class="breadcrumb">
+        <li>设备管理</li>
+        <li>设备列表</li>
+        <li>参数列表</li>
+        <li class="active">新增参数</li>
+    </ol>
+
+</div>
+<div id="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="card-title">
+                        <div class="title">
+                            新增参数
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    @using (Html.BeginForm("CreateParam", "Machine", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                        @Html.Partial("_CreateOrUpdateParam");
+                        <div class="form-actions clearfix">
+                            <div class="pull-right">
+                                <input type="submit" class="btn btn-primary btn-cons-md" value="创建" />
+                                <input type="reset" class="btn btn-white btn-cons-md" value="重置" />
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <environment include="Development">
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/client.validate.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+

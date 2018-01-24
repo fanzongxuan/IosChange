@@ -41,6 +41,12 @@ namespace Change.Service.Services
         /// <returns></returns>
         IPagedList<Machine> MachineQuery(MachineQuery query);
 
+        /// <summary>
+        /// 启用自定义参数
+        /// </summary>
+        /// <param name="id"></param>
+        void SetMachineEnable(int id, bool enable);
+
         #endregion
 
         #region MachineParamters
@@ -79,10 +85,18 @@ namespace Change.Service.Services
         IPagedList<MachineParamter> MachineParamterQuery(MachineParamterQuery query);
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        MachineParamter GetMachineParamterById(int id);
+
+        /// <summary>
         /// 启用机器记录
         /// </summary>
         /// <param name="id"></param>
-        void SetMachineParamterEnable(int id);
+        /// <param name="enable"></param>
+        void SetMachineParamterEnable(int id,bool enable);
 
         #endregion
     }

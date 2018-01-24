@@ -120,10 +120,11 @@ namespace Chane.Api.Controllers
                 Type=model.Type,
                 Resolution=model.Resolution,
                 ResolutionZoom=model.ResolutionZoom,
-                Operator=model.Operator,
-                ConnectionType=model.ConnectionType,
+                CarrierName=model.CarrierName,
+                DeviceModel=model.DeviceModel,
                 BatteryStatus=model.BatteryStatus,
-                MachineTag=model.MachineTag,
+                BatteryLevel=model.BatteryLevel,
+                MachineTag =model.MachineTag,
                 ScreenBrightness=model.ScreenBrightness,
                 WifiName=model.WifiName,
                 NetWorkType=model.NetWorkType,
@@ -156,7 +157,7 @@ namespace Chane.Api.Controllers
         public ReturnResult GenerateMachineParamter(int machineId)
         {
             var res = _machineService.GenerateMachineParamter(machineId);
-            _machineService.SetMachineParamterEnable(res.Id);
+            _machineService.SetMachineParamterEnable(res.Id,true);
             return ReturnResult.Success();
         }
 
@@ -192,7 +193,7 @@ namespace Chane.Api.Controllers
         [HttpGet]
         public ReturnResult SetMachineParamterEnable(int id)
         {
-            _machineService.SetMachineParamterEnable(id);
+            _machineService.SetMachineParamterEnable(id,true);
             return ReturnResult.Success();
         }
 

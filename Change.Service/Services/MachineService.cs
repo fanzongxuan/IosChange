@@ -71,7 +71,7 @@ namespace Change.Service.Services
             }
             else
             {
-                throw new Exception("该条记录不存在");
+                throw new ArgumentException("该条记录不存在");
             }
         }
 
@@ -90,18 +90,19 @@ namespace Change.Service.Services
                 UUID = "UUID" + guid,
                 IDFV = "IDFV" + guid,
                 SystemVersion = "SystemVersion" + guid,
+                DeviceModel = DeviceModelEnum.iPhone,
                 IDFA = "IDFA" + guid,
                 MAC = "MAC" + guid,
                 Type = "Type" + guid,
                 Resolution = "Resolution" + guid,
                 ResolutionZoom = "ResolutionZoom" + guid,
-                Operator = "Operator" + guid,
-                ConnectionType = "ConnectionType" + guid,
-                BatteryStatus = "BatteryStatus" + guid,
+                CarrierName = CarrierNameEnum.ChinaMoblie,
+                BatteryStatus = BatteryStatusEnum.NoCharge,
+                BatteryLevel = 0.6f,
                 MachineTag = "MachineTag" + guid,
                 ScreenBrightness = "ScreenBrightness" + guid,
                 WifiName = "WifiName" + guid,
-                NetWorkType = "NetWorkType" + guid,
+                NetWorkType = NetWorkTypeEnum.FrouthGen,
                 LocalLanguage = "LocalLanguage" + guid,
                 IMEI = "IMEI" + guid,
                 SaleArea = "SaleArea" + guid,
@@ -131,6 +132,16 @@ namespace Change.Service.Services
             return machine;
         }
 
+        public MachineParamter GetMachineParamterById(int id)
+        {
+            if (id == 0)
+                throw new ArgumentException("id不能为0");
+            var entity = _dbContext.MachineParamter.Find(id);
+            if (entity==null||entity.IsDeleted)
+                throw new ArgumentNullException("该设备不存在");
+            return entity;
+        }
+
         public IPagedList<MachineParamter> MachineParamterQuery(MachineParamterQuery query)
         {
             var queryable = _dbContext.MachineParamter.AsNoTracking().Where(x => x.IsDeleted == false);
@@ -156,18 +167,39 @@ namespace Change.Service.Services
             return result;
         }
 
-        public void SetMachineParamterEnable(int id)
+        public void SetMachineEnable(int id, bool enable)
+        {
+            if (id == 0)
+                throw new ArgumentNullException("id不能为0!");
+
+            var machine = _dbContext.Machine.Find(id);
+            if (machine == null || machine.IsDeleted)
+                throw new ArgumentNullException($"id为{id}的机器不存在!");
+            machine.EnableMachineParaters = enable;
+            _dbContext.SaveChanges();
+
+        }
+
+        public void SetMachineParamterEnable(int id, bool enable)
         {
             if (id == 0)
                 throw new ArgumentException("machineId不能为0");
 
-            var machinePara = _dbContext.MachineParamter.AsQueryable().FirstOrDefault(x => x.IsDeleted == false && x.Id == id);
-            var machineParamList = _dbContext.MachineParamter.AsQueryable().Where(x => x.IsDeleted == false && x.MachineId == machinePara.MachineId && x.Enable == true).ToList();
-            machineParamList.ForEach(x =>
+            var machineParam = _dbContext.MachineParamter.AsQueryable().FirstOrDefault(x => x.IsDeleted == false && x.Id == id);
+            if (enable)
             {
-                x.Enable = false;
-            });
-            machinePara.Enable = true;
+                var machineParamList = _dbContext.MachineParamter.AsQueryable().Where(x => x.IsDeleted == false && x.MachineId == machineParam.MachineId && x.Enable == true).ToList();
+                machineParamList.ForEach(x =>
+                {
+                    x.Enable = false;
+                });
+                machineParam.Enable = true;
+            }
+            else
+            {
+                machineParam.Enable = false;
+            }
+
             _dbContext.SaveChanges();
         }
 
@@ -176,6 +208,9 @@ namespace Change.Service.Services
             if (machine == null)
                 throw new ArgumentNullException("machine");
             var entity = _dbContext.Machine.Find(machine.Id);
+            if (entity.IsDeleted)
+                throw new ArgumentNullException("该设备不存在");
+
             entity.IDFA = machine.IDFA;
             entity.IDFV = machine.IDFV;
             entity.MAC = machine.MAC;
