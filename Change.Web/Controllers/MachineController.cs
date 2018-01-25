@@ -76,6 +76,18 @@ namespace Change.Web.Controllers
             return ReturnResult.Success();
         }
 
+        /// <summary>
+        /// 删除设备
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ReturnResult DeleteMachine(int id)
+        {
+            _machineService.DeleteMachine(id);
+            return ReturnResult.Success();
+        }
+
         #region ParamList
 
         /// <summary>
@@ -221,6 +233,32 @@ namespace Change.Web.Controllers
             var model = _machineService.GetMachineParamterById(id).ToModel();
             return View(model);
         }
+
+        /// <summary>
+        /// 删除参数
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ReturnResult DeleteParam(int id)
+        {
+            _machineService.DeleteMachineParamter(id);
+            return ReturnResult.Success();
+        }
+
+        /// <summary>
+        /// 快速生成自定义参数并启用
+        /// </summary>
+        /// <param name="machineId">设备Id</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ReturnResult QuickGenerate(int machineId)
+        {
+            var entity = _machineService.GenerateMachineParamter(machineId);
+            _machineService.SetMachineParamterEnable(entity.Id, true);
+            return ReturnResult.Success();
+        }
+
         #endregion
     }
 }

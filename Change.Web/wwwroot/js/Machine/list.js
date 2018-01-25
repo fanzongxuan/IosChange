@@ -27,7 +27,7 @@ var TableInit = function () {
             columns: [
                 { field: "CreateTime", title: "创建时间" },
                 { field: "IDFA", title: "IDFA" },
-                { field: "IDFA", title: "IDFA" },
+                //{ field: "IDFA", title: "IDFA" },
                 { field: "MAC", title: "MAC" },
                 {
                     field: "EnableMachineParaters",
@@ -46,7 +46,7 @@ var TableInit = function () {
                     field: "Id",
                     title: "操作",
                     formatter: function (value, row, index) {
-                        a = "<a style='margin-right:15px' href='/machine/paramList?machineId=" + value + "'>参数</a>"
+                        a = "<a style='margin-right:15px' href='/machine/paramList?machineId=" + value + "'>参数</a><a class='delete' style='margin-right:15px' href='javascript:void(0)'>删除</a>"
                         if (row['EnableMachineParaters'] == false) {
                             a = a + "<a class='enable' href='javascript:void(0)' >启用</a>"
                         } else {
@@ -76,7 +76,7 @@ window.operateEvents = {
     'click .enable': function (e, value, row, index) {
         if (confirm("是否启用自定义参数?")) {
             $.ajax({
-                type: "post",
+                type: "get",
                 url: '/Machine/EnableMachine/' + value + '?enable=true',
                 success: function (data) {
                     if (data["code"] == 1) {
@@ -89,13 +89,28 @@ window.operateEvents = {
         }
     },
     'click .disable': function (e, value, row, index) {
-        if (confirm("是否启用自定义参数?")) {
+        if (confirm("是否禁用自定义参数?")) {
             $.ajax({
-                type: "post",
+                type: "get",
                 url: '/Machine/EnableMachine/' + value + '?enable=false',
                 success: function (data) {
                     if (data["code"] == 1) {
                         $table.bootstrapTable('refresh', { field: 'Id', values: [row.Id] });
+                    } else {
+                        alert(data['message']);
+                    }
+                }
+            });
+        }
+    },
+    'click .delete': function (e, value, row, index) {
+        if (confirm("是否删除?")) {
+            $.ajax({
+                type: "get",
+                url: '/machine/DeleteMachine/' + value + '',
+                success: function (data) {
+                    if (data["code"] == 1) {
+                        $table.bootstrapTable('remove', { field: 'Id', values: [row.Id] });
                     } else {
                         alert(data['message']);
                     }

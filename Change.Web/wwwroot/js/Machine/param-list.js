@@ -29,7 +29,7 @@ var TableInit = function () {
                 { field: "Name", title: "设备名称" },
                 //{ field: "LocalName", title: "设备本地名称" },
                 //{ field: "SystemName", title: "设备系统名称" },
-                { field: "DeviceModel", title: "设备机型" },
+                { field: "DeviceModelName", title: "设备机型" },
                 //{ field: "UUID", title: "UUID" },
                 //{ field: "IDFV", title: "IDFV" },
                 { field: "SystemVersion", title: "系统版本" },
@@ -65,7 +65,7 @@ var TableInit = function () {
                     field: "Id",
                     title: "操作",
                     formatter: function (value, row, index) {
-                        a = "<a style='margin-right:15px' href='/machine/DetailParam/" + value + "'>详情</a>"
+                        a = "<a style='margin-right:15px' href='/machine/DetailParam/" + value + "'>详情</a><a class='delete' style='margin-right:15px' href='javascript:void(0)'>删除</a>"
                         if (row["Enable"] == false) {
                             a += "<a class='enable' href='javascript:void(0)' >启用</a>";
                         }
@@ -92,13 +92,28 @@ var TableInit = function () {
 }
 window.operateEvents = {
     'click .enable': function (e, value, row, index) {
-        if (confirm("是否启用自定义参数?")) {
+        if (confirm("是否启用该条自定义参数?")) {
             $.ajax({
                 type: "get",
                 url: '/machine/EnableMachineParam/' + value + '?enable=true',
                 success: function (data) {
                     if (data["code"] == 1) {
                         $table.bootstrapTable('refresh', { field: 'Id', values: [row.Id] });
+                    } else {
+                        alert(data['message']);
+                    }
+                }
+            });
+        }
+    },
+    'click .delete': function (e, value, row, index) {
+        if (confirm("是否删除?")) {
+            $.ajax({
+                type: "get",
+                url: '/machine/DeleteParam/' + value + '',
+                success: function (data) {
+                    if (data["code"] == 1) {
+                        $table.bootstrapTable('remove', { field: 'Id', values: [row.Id] });
                     } else {
                         alert(data['message']);
                     }
@@ -113,6 +128,20 @@ window.operateEvents = {
 $(function () {
     var myTable = new TableInit();
     myTable.Init();
+
+    $("#quick-generate").click(function () {
+        $.ajax({
+            type: "get",
+            url: '/machine/quickgenerate?machineId=' + $("#machineId").val() + '',
+            success: function (data) {
+                if (data["code"] == 1) {
+                    $table.bootstrapTable('refresh');
+                } else {
+                    alert(data['message']);
+                }
+            }
+        });
+    })
 });
 
 //查询

@@ -29,7 +29,7 @@
                             <div id="collapseOne" class="panel-collapse collapse in">
                                 <div class="panel-body enter-search">
                                     <div class="col-md-2 col-sm-2">
-                                        <div class='input-group date'>
+                                        <div style="" class='input-group date'>
                                             <input type="text" id="StartLine" name="StartLine" class="form-control selecttime" placeholder="开始时间">
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -45,11 +45,14 @@
                                         </div>
                                     </div>
                                     <input type="hidden" id="machineId" name="machineId" value=@ViewBag.MachineId />
-                                    <div class="col-md-2 col-sm-2">
+                                    <div class="col-md-1 col-sm-1">
                                         <a class="btn btn-primary btn-cons" id="search" href="javascript:void(0);">查询</a>
                                     </div>
-                                    <div class="col-md-2 col-sm-2">
+                                    <div class="col-md-1 col-sm-1">
                                         <a class="btn btn-primary btn-cons" id="search" href="/machine/createParam?machineId=@ViewBag.MachineId">新增</a>
+                                    </div>
+                                    <div class="col-md-1 col-sm-1">
+                                        <a class="btn btn-primary btn-cons" data-toggle="tooltip" title="一键快速随机生成参数并启用" id="quick-generate" href="javascript:void(0);">快速生成</a>
                                     </div>
                                 </div>
                             </div>
