@@ -108,29 +108,29 @@ namespace Chane.Api.Controllers
         {
             var entity = new MachineParamter()
             {
-                MachineId=model.MachineId,
-                Name=model.Name,
-                LocalName=model.LocalName,
-                SystemName=model.SystemName,
-                UUID=model.UUID,
-                IDFV=model.IDFV,
-                SystemVersion=model.SystemVersion,
-                IDFA=model.IDFA,
-                MAC=model.MAC,
-                Type=model.Type,
-                Resolution=model.Resolution,
-                ResolutionZoom=model.ResolutionZoom,
-                CarrierName=model.CarrierName,
-                DeviceModel=model.DeviceModel,
-                BatteryStatus=model.BatteryStatus,
-                BatteryLevel=model.BatteryLevel,
-                MachineTag =model.MachineTag,
-                ScreenBrightness=model.ScreenBrightness,
-                WifiName=model.WifiName,
-                NetWorkType=model.NetWorkType,
-                LocalLanguage=model.LocalLanguage,
-                IMEI=model.IMEI,
-                SaleArea=model.SaleArea
+                MachineId = model.MachineId,
+                Name = model.Name,
+                LocalName = model.LocalName,
+                SystemName = model.SystemName,
+                UUID = model.UUID,
+                IDFV = model.IDFV,
+                SystemVersion = model.SystemVersion,
+                IDFA = model.IDFA,
+                MAC = model.MAC,
+                Type = model.Type,
+                Resolution = model.Resolution,
+                ResolutionZoom = model.ResolutionZoom,
+                CarrierName = model.CarrierName,
+                DeviceModel = model.DeviceModel,
+                BatteryStatus = model.BatteryStatus,
+                BatteryLevel = model.BatteryLevel,
+                MachineTag = model.MachineTag,
+                ScreenBrightness = model.ScreenBrightness,
+                WifiName = model.WifiName,
+                NetWorkType = model.NetWorkType,
+                LocalLanguage = model.LocalLanguage,
+                IMEI = model.IMEI,
+                SaleArea = model.SaleArea
             };
             var res = _machineService.AddMachineParamters(entity);
             return ReturnResult.Success(res);
@@ -139,12 +139,23 @@ namespace Chane.Api.Controllers
         /// <summary>
         /// 获取正在使用的改机记录
         /// </summary>
-        /// <param name="machineId"></param>
+        /// <param name="model"></param>
         /// <returns></returns>
-        [HttpGet]
-        public ReturnResult<MachineParamter> GetInUseMachineParamter(int machineId)
+        [HttpPost]
+        public ReturnResult<MachineParamterModel> GetInUseMachineParamter([FromBody]AddMachineModel model)
         {
-            var res = _machineService.GetInUseMachineParamter(machineId);
+            //如果设备不存在就增加
+            var entity = new Machine()
+            {
+                IDFA = model.IDFA,
+                IDFV = model.IDFV,
+                MAC = model.MAC
+            };
+            var machine = _machineService.AddMachineIfNotExist(entity);
+
+            //获取自定义参数
+            var res = _machineService.GetInUseMachineParamter(machine.Id).ToModel();
+            
             return ReturnResult.Success(res);
         }
 
@@ -157,7 +168,7 @@ namespace Chane.Api.Controllers
         public ReturnResult GenerateMachineParamter(int machineId)
         {
             var res = _machineService.GenerateMachineParamter(machineId);
-            _machineService.SetMachineParamterEnable(res.Id,true);
+            _machineService.SetMachineParamterEnable(res.Id, true);
             return ReturnResult.Success();
         }
 
@@ -193,7 +204,7 @@ namespace Chane.Api.Controllers
         [HttpGet]
         public ReturnResult SetMachineParamterEnable(int id)
         {
-            _machineService.SetMachineParamterEnable(id,true);
+            _machineService.SetMachineParamterEnable(id, true);
             return ReturnResult.Success();
         }
 

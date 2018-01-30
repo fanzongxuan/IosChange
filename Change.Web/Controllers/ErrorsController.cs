@@ -20,12 +20,14 @@ namespace Change.Web.Controllers
         [HttpGet]
         public IActionResult Error(int statusCode, string msg)
         {
+            HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             msg = WebUtility.UrlDecode(msg);
             HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             if (HttpContext.Request != null && HttpContext.Request.IsAjaxRequest())
             {
                 switch (statusCode)
                 {
+                   
                     case (int)HttpStatusCode.Unauthorized:
                         return JsonNet(ReturnResult.Failed(string.IsNullOrEmpty(msg) ? "未授权！" : msg, ReturnCode.Unauthorized));
                     case (int)HttpStatusCode.Forbidden:

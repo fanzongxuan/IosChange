@@ -33,7 +33,7 @@ namespace Change.Web.Middleware
             }
             finally
             {
-                if (context.Response.StatusCode > 400 && context.Request != null)
+                if (context.Response.StatusCode >= 400 && context.Request != null)
                 {
                     context.Response.Redirect($"/errors/{context.Response.StatusCode}?msg={WebUtility.UrlEncode(errorMsg)}");
                 }
@@ -65,7 +65,7 @@ namespace Change.Web.Middleware
             else
                 response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            if (response.StatusCode > 400)
+            if (response.StatusCode >= 400)
             {
                 //记录日志
                 _logger.LogError(0, exception, exception.Message);

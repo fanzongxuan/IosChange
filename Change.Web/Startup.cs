@@ -1,5 +1,6 @@
 ﻿using System;
 using Change.Common.ElasticSearch;
+using Change.Common.Logger;
 using Change.Data;
 using Change.Service.Extensions;
 using Change.Web.Middleware;
@@ -8,6 +9,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Change.Web
 {
@@ -42,7 +45,8 @@ namespace Change.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
+            ILoggerFactory loggerFactory)
         {
             //database auto migration
             var dbContext = ServiceProvider.GetService<ChangeDbContext>();
@@ -57,6 +61,14 @@ namespace Change.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            //enable elastic search logger provier
+            var opts = ServiceProvider.GetService<IOptions<ESOptions>>();
+            if (opts != null && opts.Value.Enable)
+            {
+                loggerFactory.AddESLogger(ServiceProvider, Configuration.GetSection("Logging"));
+            }
+
 
             app.UseMiddleware<ExceptionHandlerMiddleWare>();
 

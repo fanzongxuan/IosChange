@@ -23,12 +23,22 @@ namespace Change.Service.Services
             var entity = GetMachineByMac(machine.MAC);
             if (entity == null)
             {
+                //新增记录并保存并启用自定义参数
                 machine.CreateTime = DateTime.Now;
+                machine.EnableMachineParaters = true;
                 _dbContext.Machine.Add(machine);
                 _dbContext.SaveChanges();
 
+                //新增自定义参数并启用
+                var param = GenerateMachineParamter(machine.Id);
+                SetMachineParamterEnable(param.Id, true);
+
+                return machine;
             }
-            return machine;
+            else
+            {
+                return entity;
+            }
         }
 
         public MachineParamter AddMachineParamters(MachineParamter paramter)
@@ -121,9 +131,18 @@ namespace Change.Service.Services
         {
             if (machineId == 0)
                 throw new ArgumentException("machineId 不能为0");
-            var mahineParamter = _dbContext.MachineParamter.FirstOrDefault(x => x.IsDeleted == false && x.Enable == true && x.MachineId == machineId);
 
-            return mahineParamter;
+            var machine = _dbContext.Machine.Where(x => x.Id == machineId && x.IsDeleted == false).FirstOrDefault();
+
+            if (machine.EnableMachineParaters)
+            {
+                var mahineParamter = _dbContext.MachineParamter.FirstOrDefault(x => x.IsDeleted == false && x.Enable == true && x.MachineId == machineId);
+                return mahineParamter;
+            }
+            else
+            {
+                throw new ArgumentException("该机器没有启用自定义参数");
+            }
         }
 
         public Machine GetMachineByMac(string mac)
@@ -137,7 +156,7 @@ namespace Change.Service.Services
             if (id == 0)
                 throw new ArgumentException("id不能为0");
             var entity = _dbContext.MachineParamter.Find(id);
-            if (entity==null||entity.IsDeleted)
+            if (entity == null || entity.IsDeleted)
                 throw new ArgumentNullException("该设备不存在");
             return entity;
         }
@@ -151,7 +170,7 @@ namespace Change.Service.Services
                 queryable = queryable.Where(x => x.CreateTime >= query.FromTime);
             if (query.ToTime.HasValue)
                 queryable = queryable.Where(x => x.CreateTime <= query.ToTime);
-            queryable = queryable.OrderByDescending(x => x.CreateTime);
+            queryable = queryable.OrderByDescending(x => x.Id);
             var result = new PagedList<MachineParamter>(queryable, query.PageIndex, query.PageSize);
             return result;
         }
@@ -163,6 +182,7 @@ namespace Change.Service.Services
                 queryable = queryable.Where(x => x.CreateTime >= query.FromTime);
             if (query.ToTime.HasValue)
                 queryable = queryable.Where(x => x.CreateTime <= query.ToTime);
+            queryable = queryable.OrderByDescending(x => x.Id);
             var result = new PagedList<Machine>(queryable, query.PageIndex, query.PageSize);
             return result;
         }

@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Chane.Api.Middleware;
+using Change.Common.ElasticSearch;
+using Change.Common.Logger;
 using Change.Data;
 using Change.Service.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -27,12 +29,18 @@ namespace Chane.Api
 
         public IConfiguration Configuration { get; }
 
+        public IServiceProvider ServiceProvider { get; set; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             // mysql connection
             var conn = Configuration.GetConnectionString("ChangeConnection");
             services.AddDbContextPool<ChangeDbContext>(options => options.UseMySql(conn));
+
+            //Es configure
+            services.Configure<ESOptions>(Configuration.GetSection("ElasticSearch"));
+            services.AddSingleton<ESClientProvider>();
 
             //my services
             services.AddMyServices();
@@ -48,15 +56,28 @@ namespace Chane.Api
             });
 
             services.AddMvc();
+            ServiceProvider = services.BuildServiceProvider();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
+            ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //enable elastic search logger provier
+            var opts = ServiceProvider.GetService<IOptions<ESOptions>>();
+            if (opts != null && opts.Value.Enable)
+            {
+                loggerFactory.AddESLogger(ServiceProvider, Configuration.GetSection("Logging"));
+            }
+
+            //database auto migration
+            var dbContext = ServiceProvider.GetService<ChangeDbContext>();
+            dbContext.Database.Migrate();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint
             app.UseSwagger();
