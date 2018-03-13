@@ -12,9 +12,9 @@ namespace Change.Service.Services
         /// <summary>
         /// 根据mac地址获取机器
         /// </summary>
-        /// <param name="mac"></param>
+        /// <param name="ip"></param>
         /// <returns></returns>
-        Machine GetMachineByMac(string mac);
+        Machine GetMachineByIP(string ip);
 
         /// <summary>
         /// 新增machine
@@ -62,8 +62,9 @@ namespace Change.Service.Services
         /// 获取启用的机器参数
         /// </summary>
         /// <param name="machineId"></param>
+        /// <param name="budleId">app 包名</param>
         /// <returns></returns>
-        MachineParamter GetInUseMachineParamter(int machineId);
+        MachineParamter GetInUseMachineParamter(int machineId, string budleId);
 
         /// <summary>
         /// 随机生成机器参数
@@ -96,7 +97,26 @@ namespace Change.Service.Services
         /// </summary>
         /// <param name="id"></param>
         /// <param name="enable"></param>
-        void SetMachineParamterEnable(int id,bool enable);
+        void SetMachineParamterEnable(int id, bool enable);
+
+        #endregion
+
+        #region BudleIds
+
+        /// <summary>
+        /// 添加作用包名
+        /// </summary>
+        /// <param name="budleIds"></param>
+        /// <param name="machineId"></param>
+        /// <returns></returns>
+        void AddImpactBudleIds(List<string> budleIds, int machineId);
+
+        /// <summary>
+        /// 删除作用包名
+        /// </summary>
+        /// <param name="budleIds"></param>
+        /// <param name="machineId"></param>
+        void DeleteBudleIds(List<string> budleIds, int machineId);
 
         #endregion
     }

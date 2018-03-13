@@ -14,138 +14,131 @@ namespace Change.Model
         public int MachineId { get; set; }
 
         /// <summary>
-        /// 设备名称
+        /// sample :kCTWirelessTechnologyUnkonwn
         /// </summary>
-        [Display(Name = "设备名称"), Required(ErrorMessage = "设备名称不能为空")]
-        public string Name { get; set; }
+        [Display(Name = "ActiveWirelessTechnology")]
+        public string ActiveWirelessTechnology { get; set; }
 
         /// <summary>
-        /// 设备本地名称
+        /// Wifi 商户 sample:Murata
         /// </summary>
-        [Display(Name = "设备本地名称"), Required(ErrorMessage = "设备本地名称不能为空")]
-        public string LocalName { get; set; }
+        [Display(Name = "Wifi商户")]
+        public string WifiVendor { get; set; }
 
         /// <summary>
-        /// 设备系统名称
+        /// Sample:LL/A
         /// </summary>
-        [Display(Name = "设备系统名称")]
-        public string SystemName { get; set; }
+        [Display(Name = "区域信息")]
+        public string RegionInfo { get; set; }
 
         /// <summary>
-        /// 设备机型：iPhone,iPad,iTouch 三种
+        /// LL
         /// </summary>
-        [Display(Name = "设备机型"), Required(ErrorMessage = "请选择机型")]
-        public DeviceModelEnum DeviceModel { get; set; }
+        [Display(Name = "区域代码")]
+        public string RegionCode { get; set; }
+
+        /// <summary>
+        /// sampale:12.2.2
+        /// </summary>
+        [Display(Name = "Itunes最小支持版本")]
+        public string MinimumSupportediTunesVersion { get; set; }
+
+        /// <summary>
+        /// sample:iBoot-2817.20.26
+        /// </summary>
+        [Display(Name = "FirewareVersion")]
+        public string FirewareVersion { get; set; }
+
+        /// <summary>
+        /// 系统版本 sample:9.2.1
+        /// </summary>
+        [Display(Name = "系统版本")]
+        public string ProductVersion { get; set; }
+
+        /// <summary>
+        /// 设备详细型号，sample:iPhone 5,3
+        /// </summary>
+        [Display(Name = "设备详细型号")]
+        public string ProductType { get; set; }
+
+        /// <summary>
+        /// sample:Iphone OS
+        /// </summary>
+        [Display(Name = "产品名称")]
+        public string ProductName { get; set; }
+
+        /// <summary>
+        /// sample:13D15
+        /// </summary>
+        [Display(Name = "BuildVersion")]
+        public string BuildVersion { get; set; }
+
+        /// <summary>
+        ///sample: iPhone
+        /// </summary>
+        [Display(Name = "设备种类")]
+        public string DeviceClass { get; set; }
+
+        /// <summary>
+        /// sapmple:#ele4e3
+        /// </summary>
+        [Display(Name = "设备颜色")]
+        public string DeviceColor { get; set; }
+
+        /// <summary>
+        /// 设备型号
+        /// </summary>
+        [Display(Name = "设备型号")]
+        public DeviceModelEnum DeviceName { get; set; }
+
+        /// <summary>
+        /// sample:t700
+        /// </summary>
+        [Display(Name = "硬件平台")]
+        public string HardwarePlatform { get; set; }
+
+        /// <summary>
+        /// sample:N61AP
+        /// </summary>
+        [Display(Name = "HWModelStr")]
+        public string HWModelStr { get; set; }
+
+        /// <summary>
+        /// sample:A
+        /// </summary>
+        [Display(Name = "设备变体")]
+        public string DeviceVariant { get; set; }
+
+        /// <summary>
+        /// cpu 架构
+        /// </summary>
+        [Display(Name = "cpu架构")]
+        public CPUArchitectureEnum CPUArchitecture { get; set; }
+
+        /// <summary>
+        /// 用户自定义设备名称
+        /// </summary>
+        [Display(Name = "用户自定义设备名称")]
+        public string UserAssignedDeviceName { get; set; }
 
         /// <summary>
         /// UUID
         /// </summary>
-        [Display(Name = "UUID"), Required(ErrorMessage = "UUID不能为空")]
-        public string UUID { get; set; }
+        [Display(Name = "UUID")]
+        public string UniqueDeviceId { get; set; }
 
         /// <summary>
-        /// IDFV
+        /// 序列号
         /// </summary>
-        [Display(Name = "IDFV"), Required(ErrorMessage = "IDFV不能为空")]
-        public string IDFV { get; set; }
+        [Display(Name = "序列号")]
+        public string SerialNumber { get; set; }
 
         /// <summary>
-        /// 系统版本
+        /// sample:MG502
         /// </summary>
-        [Display(Name = "SystemVersion"), Required(ErrorMessage = "系统版本不能为空")]
-        public string SystemVersion { get; set; }
-
-        /// <summary>
-        /// IDFV
-        /// </summary>
-        [Display(Name = "IDFA"), Required(ErrorMessage = "IDFA不能为空")]
-        public string IDFA { get; set; }
-
-        /// <summary>
-        /// mac 地址
-        /// </summary>
-        [Display(Name = "MAC"), Required(ErrorMessage = "MAC不能为空")]
-        public string MAC { get; set; }
-
-        /// <summary>
-        /// 手机类型
-        /// </summary>
-        [Display(Name = "Type"), Required(ErrorMessage = "手机类型不能为空")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// 分辨率
-        /// </summary>
-        [Display(Name = "分辨率"), Required(ErrorMessage = "分辨率不能为空")]
-        public string Resolution { get; set; }
-
-        /// <summary>
-        /// 分辨率缩放
-        /// </summary>
-        [Display(Name = "分辨率缩放")]
-        public string ResolutionZoom { get; set; }
-
-        /// <summary>
-        /// 运营商
-        /// </summary>
-        [Display(Name = "运营商"), Required(ErrorMessage = "请选择运营商")]
-        public CarrierNameEnum CarrierName { get; set; }
-
-        /// <summary>
-        /// 电池状态
-        /// </summary>
-        [Display(Name = "电池状态"), Required(ErrorMessage = "请选电池状态")]
-        public BatteryStatusEnum BatteryStatus { get; set; }
-
-        /// <summary>
-        /// 电池电量，不指定会自动随机 0.600000~0.800000 电量，如 0.670000
-        /// </summary>
-        [Display(Name = "电池电量")]
-        public float BatteryLevel { get; set; }
-
-        /// <summary>
-        /// 设备标签
-        /// </summary>
-        [Display(Name = "设备标签")]
-        public string MachineTag { get; set; }
-
-        /// <summary>
-        /// 屏幕亮度
-        /// </summary>
-        [Display(Name = "屏幕亮度")]
-        public string ScreenBrightness { get; set; }
-
-        /// <summary>
-        /// wifi名称
-        /// </summary>
-        [Display(Name = "wifi名称")]
-        public string WifiName { get; set; }
-
-        /// <summary>
-        /// 联网类型
-        /// </summary>
-        [Display(Name = "联网类型")]
-        public NetWorkTypeEnum NetWorkType { get; set; }
-
-        /// <summary>
-        /// 本地语言
-        /// </summary>
-        [Display(Name = "本地语言")]
-        public string LocalLanguage { get; set; }
-
-        /// <summary>
-        /// IMEI
-        /// </summary>
-        [Display(Name = "IMEI")]
-        public string IMEI { get; set; }
-
-        /// <summary>
-        /// 销售地区
-        /// </summary>
-        [Display(Name = "销售地区")]
-        public string SaleArea { get; set; }
-
-        /// <summary>
+        [Display(Name = "ModelNumber")]
+        public string ModelNumber { get; set; }
+        
         /// 是否启用
         /// </summary>
         [Display(Name = "是否启用")]

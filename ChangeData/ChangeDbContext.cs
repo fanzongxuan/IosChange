@@ -9,6 +9,8 @@ namespace Change.Data
 
         public DbSet<MachineParamter> MachineParamter { get; set; }
 
+        public DbSet<ImpactBudleId> ImpactBudleId { get; set; }
+
         public ChangeDbContext(DbContextOptions<ChangeDbContext> options) : base(options)
         {
         }

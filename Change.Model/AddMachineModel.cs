@@ -6,22 +6,14 @@ namespace Change.Model
     public class AddMachineModel
     {
         /// <summary>
-        /// IDFV
-        /// </summary>
-        [Required]
-        public string IDFA { get; set; }
-
-        /// <summary>
-        /// IDFV
-        /// </summary>
-        [Required]
-        public string IDFV { get; set; }
-
-        /// <summary>
-        /// mac 地址
+        /// UUID
         /// </summary
         [Required]
-        public string MAC { get; set; }
+        public string Ip { get; set; }
 
+        /// <summary>
+        /// 包名
+        /// </summary>
+        public string BudleId { get; set; }
     }
 }

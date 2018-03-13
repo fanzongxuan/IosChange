@@ -16,6 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Chane.Api
@@ -55,7 +57,17 @@ namespace Chane.Api
                 c.DescribeAllEnumsAsStrings();
             });
 
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                //忽略循环引用
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                //字符串输出枚举
+                options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                //设置时间格式
+                options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                //NULL值忽略
+                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            }); ;
             ServiceProvider = services.BuildServiceProvider();
         }
 

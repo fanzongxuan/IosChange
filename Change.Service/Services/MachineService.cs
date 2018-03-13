@@ -6,21 +6,78 @@ using Change.Common.Core;
 using Change.Data;
 using Change.Data.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Change.Service.Services
 {
     public class MachineService : IMachineService
     {
         private readonly ChangeDbContext _dbContext;
+        private readonly ILogger _logger;
 
-        public MachineService(ChangeDbContext dbContext)
+        public MachineService(ChangeDbContext dbContext,
+            ILoggerFactory loggerFactory)
         {
             _dbContext = dbContext;
+            this._logger = loggerFactory.CreateLogger("ioschange-api");
         }
+
+        #region Uitites
+
+        private string GetRandomUserAssignedDeviceName()
+        {
+            string[] s1 = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+                "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+            Random rand = new Random();
+            int length = rand.Next(4, 10);
+            return GetRandomStringFormArrary(s1, length);
+        }
+
+        private string GetRandomSerialNumber()
+        {
+            string[] s1 = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+                "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+            return GetRandomStringFormArrary(s1, 12);
+        }
+
+        private string GetRandomUDID()
+        {
+            string[] s1 = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+                "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+            return GetRandomStringFormArrary(s1, 40);
+        }
+
+
+        private string GetRandomProductVersion()
+        {
+            string[] versions = {"9.0","9.0.1","9.0.1","9.0.2","9.1","9.2","9.2.1","9.3","9.3.1","9.3.2","9.3.3,",
+                "10.0.2","10.0.3","10.1","10.1.1","10.2","10.2.1","10.3","10.3.1","10.3.2","10.3.3","11.0.3","11.1","11.1.1","11.1.2","11.2","11.2.1","11.2.2","11.2.5","11.2.6"};
+            return GetRandomStringFormArrary(versions, 1);
+        }
+
+        private string GetRandomStringFormArrary(string[] strings, int length)
+        {
+            string result = "";
+            Random rand = new Random();
+            for (int i = 0; i < length; i++)
+            {
+                result += strings[rand.Next(0, strings.Length)];
+            }
+
+            return result;
+        }
+
+
+        private bool IsInWhiteList(string budleId)
+        {
+            string[] whiteList = { "com.apple.Preferences", "com.apple.springboard", "com.apple.UIkit","com.apple.AppStore", "com.apple.FamilyCircle", "com.apple.mobilecal.widget" };
+            return whiteList.Contains(budleId);
+        }
+        #endregion
 
         public Machine AddMachineIfNotExist(Machine machine)
         {
-            var entity = GetMachineByMac(machine.MAC);
+            var entity = GetMachineByIP(machine.Ip);
             if (entity == null)
             {
                 //新增记录并保存并启用自定义参数
@@ -94,28 +151,27 @@ namespace Change.Service.Services
             //todo 机器参数生成待确定
             var entity = new MachineParamter()
             {
-                Name = "Name" + guid,
-                LocalName = "LocalName" + guid,
-                SystemName = "SystemName" + guid,
-                UUID = "UUID" + guid,
-                IDFV = "IDFV" + guid,
-                SystemVersion = "SystemVersion" + guid,
-                DeviceModel = DeviceModelEnum.iPhone,
-                IDFA = "IDFA" + guid,
-                MAC = "MAC" + guid,
-                Type = "Type" + guid,
-                Resolution = "Resolution" + guid,
-                ResolutionZoom = "ResolutionZoom" + guid,
-                CarrierName = CarrierNameEnum.ChinaMoblie,
-                BatteryStatus = BatteryStatusEnum.NoCharge,
-                BatteryLevel = 0.6f,
-                MachineTag = "MachineTag" + guid,
-                ScreenBrightness = "ScreenBrightness" + guid,
-                WifiName = "WifiName" + guid,
-                NetWorkType = NetWorkTypeEnum.FrouthGen,
-                LocalLanguage = "LocalLanguage" + guid,
-                IMEI = "IMEI" + guid,
-                SaleArea = "SaleArea" + guid,
+                //ActiveWirelessTechnology= "kCTWirelessTechnologyUnkonwn",
+                //WifiVendor= "Murata",
+                //RegionInfo="LL/A",
+                //RegionCode="LL",
+                //MinimumSupportediTunesVersion = "12.2.2",
+                //FirewareVersion= "iBoot-2817.20.26",
+                ProductVersion = GetRandomProductVersion(),
+                //ProductType = "iPhone 5,3",
+                //ProductName= "Iphone OS",
+                //BuildVersion= "13D15",
+                //DeviceClass= "iPhone",
+                //DeviceColor= "#ele4e3",
+                //DeviceName= DeviceModelEnum.iPhone,
+                UserAssignedDeviceName = GetRandomUserAssignedDeviceName(),
+                //HardwarePlatform= "t700",
+                //HWModelStr= "N61AP",
+                //DeviceVariant="A",
+                //CPUArchitecture= CPUArchitectureEnum.armv7s,
+                UniqueDeviceId = GetRandomUDID(),
+                SerialNumber = GetRandomSerialNumber(),
+                //ModelNumber="MG502",
                 Enable = false,
                 MachineId = machineId,
                 CreateTime = DateTime.Now,
@@ -127,13 +183,21 @@ namespace Change.Service.Services
             return entity;
         }
 
-        public MachineParamter GetInUseMachineParamter(int machineId)
+        public MachineParamter GetInUseMachineParamter(int machineId, string budleId)
         {
             if (machineId == 0)
                 throw new ArgumentException("machineId 不能为0");
 
-            var machine = _dbContext.Machine.Where(x => x.Id == machineId && x.IsDeleted == false).FirstOrDefault();
+            var query = _dbContext.Machine.
+                Where(x => x.Id == machineId && x.IsDeleted == false);
 
+            if (!string.IsNullOrEmpty(budleId))
+            {
+                if (!IsInWhiteList(budleId))
+                    query = query.Where(x => x.ImpactBudleIds.Any(y => y.IsDeleted == false && y.BudleId == budleId));
+            }
+
+            var machine = query.FirstOrDefault();
             if (machine.EnableMachineParaters)
             {
                 var mahineParamter = _dbContext.MachineParamter.FirstOrDefault(x => x.IsDeleted == false && x.Enable == true && x.MachineId == machineId);
@@ -145,9 +209,9 @@ namespace Change.Service.Services
             }
         }
 
-        public Machine GetMachineByMac(string mac)
+        public Machine GetMachineByIP(string uuid)
         {
-            var machine = _dbContext.Machine.AsNoTracking().FirstOrDefault(x => x.MAC == mac && x.IsDeleted == false);
+            var machine = _dbContext.Machine.AsNoTracking().FirstOrDefault(x => x.Ip == uuid && x.IsDeleted == false);
             return machine;
         }
 
@@ -231,11 +295,55 @@ namespace Change.Service.Services
             if (entity.IsDeleted)
                 throw new ArgumentNullException("该设备不存在");
 
-            entity.IDFA = machine.IDFA;
-            entity.IDFV = machine.IDFV;
-            entity.MAC = machine.MAC;
+            entity.Ip = machine.Ip;
             _dbContext.SaveChanges();
             return machine;
         }
+
+        #region BudleIds
+
+        /// <summary>
+        /// 添加作用包名
+        /// </summary>
+        /// <param name="budleIds"></param>
+        /// <param name="machineId"></param>
+        /// <returns></returns>
+        public void AddImpactBudleIds(List<string> budleIds, int machineId)
+        {
+            budleIds = budleIds.Distinct().ToList(); ;
+            var exsitBudleIds = _dbContext.ImpactBudleId.
+                Where(x => x.MachineId == machineId && x.IsDeleted == false).
+                ToList().
+                Select(x => { return x.BudleId; });
+
+            var needToAddBudleIds = budleIds.Except(exsitBudleIds).Select(x =>
+            {
+                return new ImpactBudleId()
+                {
+                    MachineId = machineId,
+                    BudleId = x
+                };
+            });
+
+            _dbContext.ImpactBudleId.AddRange(needToAddBudleIds);
+            _dbContext.SaveChanges();
+        }
+
+        /// <summary>
+        /// 删除作用包名
+        /// </summary>
+        /// <param name="budleIds"></param>
+        public void DeleteBudleIds(List<string> budleIds, int machineId)
+        {
+            budleIds = budleIds.Distinct().ToList(); ;
+            foreach (var item in budleIds)
+            {
+                var needToDeleteBudleId = _dbContext.ImpactBudleId.FirstOrDefault(x => x.IsDeleted == false && x.MachineId == machineId && x.BudleId == item);
+                needToDeleteBudleId.IsDeleted = false;
+            }
+            _dbContext.SaveChanges();
+        }
+
+        #endregion
     }
 }

@@ -12,33 +12,15 @@ using System;
 namespace Change.Data.Migrations
 {
     [DbContext(typeof(ChangeDbContext))]
-    partial class ChangeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180227090030_edit_ip")]
+    partial class edit_ip
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
-
-            modelBuilder.Entity("Change.Data.Data.ImpactBudleId", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("BudleId");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<int>("MachineId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MachineId");
-
-                    b.ToTable("ImpactBudleId");
-                });
 
             modelBuilder.Entity("Change.Data.Data.Machine", b =>
                 {
@@ -122,14 +104,6 @@ namespace Change.Data.Migrations
                     b.HasIndex("MachineId");
 
                     b.ToTable("MachineParamter");
-                });
-
-            modelBuilder.Entity("Change.Data.Data.ImpactBudleId", b =>
-                {
-                    b.HasOne("Change.Data.Data.Machine")
-                        .WithMany("ImpactBudleIds")
-                        .HasForeignKey("MachineId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Change.Data.Data.MachineParamter", b =>

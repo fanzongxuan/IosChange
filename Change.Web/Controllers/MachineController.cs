@@ -7,6 +7,7 @@ using Change.Common.Extension;
 using Change.Data.Data;
 using Change.Model;
 using Change.Service.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Change.Web.Controllers
@@ -117,28 +118,27 @@ namespace Change.Web.Controllers
                     return new
                     {
                         x.Id,
-                        x.Name,
-                        x.LocalName,
-                        x.SystemName,
-                        DeviceModelName = x.DeviceModel.GetName(),
-                        x.UUID,
-                        x.IDFV,
-                        x.SystemVersion,
-                        x.IDFA,
-                        x.MAC,
-                        x.Type,
-                        x.Resolution,
-                        x.ResolutionZoom,
-                        CarrierName = x.CarrierName.GetName(),
-                        BatteryStatusName = x.BatteryStatus.GetName(),
-                        x.BatteryLevel,
-                        x.MachineTag,
-                        x.ScreenBrightness,
-                        x.WifiName,
-                        NetWorkTypeName = x.NetWorkType.GetName(),
-                        x.LocalLanguage,
-                        x.IMEI,
-                        x.SaleArea,
+                        x.ActiveWirelessTechnology,
+                        x.WifiVendor,
+                        x.RegionCode,
+                        x.RegionInfo,
+                        x.MinimumSupportediTunesVersion,
+                        x.FirewareVersion,
+                        x.ProductVersion,
+                        x.ProductType,
+                        x.ProductName,
+                        x.BuildVersion,
+                        x.DeviceClass,
+                        x.DeviceColor,
+                        x.DeviceName,
+                        x.HardwarePlatform,
+                        x.HWModelStr,
+                        x.DeviceVariant,
+                        CPUArchitecture = x.CPUArchitecture.GetName(),
+                        x.UserAssignedDeviceName,
+                        x.UniqueDeviceId,
+                        x.SerialNumber,
+                        x.ModelNumber,
                         x.Enable,
                         x.CreateTime,
                         x.UpdateTime
@@ -189,42 +189,43 @@ namespace Change.Web.Controllers
                 var entity = new MachineParamter()
                 {
                     MachineId = model.MachineId,
-                    Name = model.Name,
-                    LocalName = model.LocalName,
-                    SystemName = model.SystemName,
-                    UUID = model.UUID,
-                    IDFV = model.IDFV,
-                    SystemVersion = model.SystemVersion,
-                    IDFA = model.IDFA,
-                    MAC = model.MAC,
-                    Type = model.Type,
-                    Resolution = model.Resolution,
-                    ResolutionZoom = model.ResolutionZoom,
-                    CarrierName = model.CarrierName,
-                    DeviceModel = model.DeviceModel,
-                    BatteryStatus = model.BatteryStatus,
-                    BatteryLevel = model.BatteryLevel,
-                    MachineTag = model.MachineTag,
-                    ScreenBrightness = model.ScreenBrightness,
-                    WifiName = model.WifiName,
-                    NetWorkType = model.NetWorkType,
-                    LocalLanguage = model.LocalLanguage,
-                    IMEI = model.IMEI,
-                    SaleArea = model.SaleArea
+                    ActiveWirelessTechnology = model.ActiveWirelessTechnology,
+                    WifiVendor = model.WifiVendor,
+                    RegionCode = model.RegionCode,
+                    RegionInfo = model.RegionInfo,
+                    MinimumSupportediTunesVersion = model.MinimumSupportediTunesVersion,
+                    FirewareVersion = model.FirewareVersion,
+                    ProductVersion = model.ProductVersion,
+                    ProductType = model.ProductType,
+                    ProductName = model.ProductName,
+                    BuildVersion = model.BuildVersion,
+                    DeviceClass = model.DeviceClass,
+                    DeviceColor = model.DeviceColor,
+                    DeviceName = model.DeviceName,
+                    HardwarePlatform = model.HardwarePlatform,
+                    HWModelStr = model.HWModelStr,
+                    DeviceVariant = model.DeviceVariant,
+                    CPUArchitecture = model.CPUArchitecture,
+                    UserAssignedDeviceName = model.UserAssignedDeviceName,
+                    UniqueDeviceId = model.UniqueDeviceId,
+                    SerialNumber = model.SerialNumber,
+                    ModelNumber = model.ModelNumber,
                 };
                 _machineService.AddMachineParamters(entity);
 
                 if (model.Enable)
                     _machineService.SetMachineParamterEnable(entity.Id, true);
 
+                return RedirectToAction("DetailParam", new { id = entity.Id });
+
             }
             else
             {
                 var errors = string.Join(';', ModelState.Errors());
                 ErrorNotification(errors);
+                return View(model);
             }
 
-            return View(model);
         }
 
         [HttpGet]

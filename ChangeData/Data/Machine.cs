@@ -7,19 +7,9 @@ namespace Change.Data.Data
     public class Machine : BaseEntity
     {
         /// <summary>
-        /// IDFV
+        ///Ip
         /// </summary>
-        public string IDFA { get; set; }
-
-        /// <summary>
-        /// IDFV
-        /// </summary>
-        public string IDFV { get; set; }
-
-        /// <summary>
-        /// mac 地址
-        /// </summary>
-        public string MAC { get; set; }
+        public string Ip { get; set; }
 
         /// <summary>
         /// 是否启用自定义参数
@@ -30,6 +20,11 @@ namespace Change.Data.Data
         /// 参数列表
         /// </summary>
         public virtual ICollection<MachineParamter> MachineParamters { get; set; } = new List<MachineParamter>();
+
+        /// <summary>
+        /// 参数列表
+        /// </summary>
+        public virtual ICollection<ImpactBudleId> ImpactBudleIds { get; set; } = new List<ImpactBudleId>();
 
         /// <summary>
         /// 创建时间

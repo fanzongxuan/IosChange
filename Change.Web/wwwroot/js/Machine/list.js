@@ -26,9 +26,7 @@ var TableInit = function () {
             exportTypes: ['excel'],
             columns: [
                 { field: "CreateTime", title: "创建时间" },
-                { field: "IDFA", title: "IDFA" },
-                //{ field: "IDFA", title: "IDFA" },
-                { field: "MAC", title: "MAC" },
+                { field: "Ip", title: "Ip" },
                 {
                     field: "EnableMachineParaters",
                     title: "是否启用自定义参数",

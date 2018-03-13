@@ -3,196 +3,174 @@
 @using Change.Common.Extension
 
 @{ 
-    var availableBatteryStatus = Html.GetEnumSelectList<BatteryStatusEnum>();
-    foreach (var item in availableBatteryStatus)
+    var availableCPUArchitecture = Html.GetEnumSelectList<CPUArchitectureEnum>();
+    foreach (var item in availableCPUArchitecture)
     {
-        if (item.Text == Model.BatteryStatus.GetName())
+        if (item.Text == Model.CPUArchitecture.GetName())
         {
             item.Selected = true;
         }
     }
 
     var availableDeviceModel = Html.GetEnumSelectList<DeviceModelEnum>();
-    foreach (var item in availableDeviceModel)
+    foreach (var item in availableCPUArchitecture)
     {
-        if (item.Text == Model.DeviceModel.GetName())
+        if (item.Text == Model.DeviceName.GetName())
         {
             item.Selected = true;
         }
     }
 
-    var availableCarrierName = Html.GetEnumSelectList<CarrierNameEnum>();
-    foreach (var item in availableCarrierName)
-    {
-        if (item.Text == Model.CarrierName.GetName())
-        {
-            item.Selected = true;
-        }
-    }
+    
 
-    var availableNetWorkType = Html.GetEnumSelectList<NetWorkTypeEnum>();
-    foreach (var item in availableNetWorkType)
-    {
-        if (item.Text == Model.NetWorkType.GetName())
-        {
-            item.Selected = true;
-        }
-    }
 }
 
 @Html.HiddenFor(x => x.MachineId)
 <div class="form-group">
-    @Html.LabelFor(x => x.Name, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.ActiveWirelessTechnology, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.EditorFor(x => x.Name, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.ActiveWirelessTechnology, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ActiveWirelessTechnology, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.LocalName, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.WifiVendor, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.EditorFor(x => x.LocalName, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.LocalName, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.WifiVendor, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.WifiVendor, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.SystemName, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.RegionInfo, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.EditorFor(x => x.SystemName, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.SystemName, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.RegionInfo, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.RegionInfo, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.DeviceModel, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.RegionCode, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.DropDownListFor(x => x.DeviceModel, availableDeviceModel, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.DeviceModel, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.RegionCode, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.RegionCode, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.UUID, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.MinimumSupportediTunesVersion, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.EditorFor(x => x.UUID, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.UUID, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.MinimumSupportediTunesVersion, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.MinimumSupportediTunesVersion, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.IDFV, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.FirewareVersion, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.EditorFor(x => x.IDFV, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.IDFV, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.FirewareVersion, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.FirewareVersion, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.SystemVersion, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.ProductVersion, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.EditorFor(x => x.SystemVersion, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.SystemVersion, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.ProductVersion, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ProductVersion, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.IDFA, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.ProductType, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.EditorFor(x => x.IDFA, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.IDFA, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.ProductType, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ProductType, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.MAC, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.ProductName, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.EditorFor(x => x.MAC, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.MAC, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.Type, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.BuildVersion, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.EditorFor(x => x.Type, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.BuildVersion, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.BuildVersion, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.Resolution, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.DeviceClass, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.EditorFor(x => x.Resolution, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Resolution, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.DeviceClass, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.DeviceClass, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.ResolutionZoom, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.DeviceColor, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.EditorFor(x => x.ResolutionZoom, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.ResolutionZoom, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.DeviceColor, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.DeviceColor, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.CarrierName, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.DeviceName, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.DropDownListFor(x => x.CarrierName, availableCarrierName, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.CarrierName, "", new { @class = "text-danger" })
+        @Html.DropDownListFor(x => x.DeviceName, availableDeviceModel, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.DeviceName, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.BatteryStatus, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.HardwarePlatform, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.DropDownListFor(x => x.BatteryStatus, availableBatteryStatus, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.BatteryStatus, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.HardwarePlatform, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.HardwarePlatform, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.BatteryLevel, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.HWModelStr, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.EditorFor(x => x.BatteryLevel, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.BatteryLevel, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.HWModelStr, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.HWModelStr, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.MachineTag, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.DeviceVariant, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.EditorFor(x => x.MachineTag, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.MachineTag, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.DeviceVariant, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.DeviceVariant, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.ScreenBrightness, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.UserAssignedDeviceName, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.EditorFor(x => x.ScreenBrightness, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.ScreenBrightness, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.UserAssignedDeviceName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.UserAssignedDeviceName, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.WifiName, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.UniqueDeviceId, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.EditorFor(x => x.WifiName, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.WifiName, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.UniqueDeviceId, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.UniqueDeviceId, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.NetWorkType, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.CPUArchitecture, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.DropDownListFor(x => x.NetWorkType, availableNetWorkType, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.NetWorkType, "", new { @class = "text-danger" })
+        @Html.DropDownListFor(x => x.CPUArchitecture, availableCPUArchitecture, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.CPUArchitecture, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.LocalLanguage, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.SerialNumber, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.EditorFor(x => x.LocalLanguage, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.LocalLanguage, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.SerialNumber, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.SerialNumber, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(x => x.IMEI, new { @class = "col-sm-2 control-label" })
+    @Html.LabelFor(x => x.ModelNumber, new { @class = "col-sm-2 control-label" })
     <div class="col-md-8">
-        @Html.EditorFor(x => x.IMEI, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.IMEI, "", new { @class = "text-danger" })
-    </div>
-</div>
-<div class="form-group">
-    @Html.LabelFor(x => x.SaleArea, new { @class = "col-sm-2 control-label" })
-    <div class="col-md-8">
-        @Html.EditorFor(x => x.SaleArea, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.SaleArea, "", new { @class = "text-danger" })
+        @Html.EditorFor(x => x.ModelNumber, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ModelNumber, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">

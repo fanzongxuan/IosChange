@@ -12,9 +12,10 @@ using System;
 namespace Change.Data.Migrations
 {
     [DbContext(typeof(ChangeDbContext))]
-    partial class ChangeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180313015859_add_impact_budleids")]
+    partial class add_impact_budleids
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
