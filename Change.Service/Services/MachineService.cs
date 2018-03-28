@@ -383,14 +383,19 @@ namespace Change.Service.Services
             if (changeRecordId == 0)
                 throw new ArgumentNullException("changeRecordId不能为0");
 
-            var entity = new ReUseRecord()
+            var formatStr = DateTime.Now.ToString("yyyyMMdd");
+            if (!_dbContext.ReUseRecord.Any(x => x.IsDeleted == false && x.ChangeRecordId == changeRecordId && x.FormateDateString == formatStr))
             {
-                ChangeRecordId = changeRecordId,
-                FormateDateString=DateTime.Now.ToString("yyyyMMdd"),
-                CreateTime = DateTime.Now
-            };
-            _dbContext.ReUseRecord.Add(entity);
-            _dbContext.SaveChanges();
+                var entity = new ReUseRecord()
+                {
+                    ChangeRecordId = changeRecordId,
+                    FormateDateString = formatStr,
+                    CreateTime = DateTime.Now
+                };
+                _dbContext.ReUseRecord.Add(entity);
+                _dbContext.SaveChanges();
+            }
+
         }
 
         #endregion
