@@ -11,6 +11,10 @@ namespace Change.Data
 
         public DbSet<ImpactBudleId> ImpactBudleId { get; set; }
 
+        public DbSet<ChangeRecord> ChangeRecord { get; set; }
+
+        public DbSet<ReUseRecord> ReUseRecord { get; set; }
+
         public ChangeDbContext(DbContextOptions<ChangeDbContext> options) : base(options)
         {
         }

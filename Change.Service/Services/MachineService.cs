@@ -70,7 +70,7 @@ namespace Change.Service.Services
 
         private bool IsInWhiteList(string budleId)
         {
-            string[] whiteList = { "com.apple.Preferences", "com.apple.springboard", "com.apple.UIkit","com.apple.AppStore", "com.apple.FamilyCircle", "com.apple.mobilecal.widget" };
+            string[] whiteList = { "com.apple.Preferences", "com.apple.springboard", "com.apple.UIkit", "com.apple.AppStore", "com.apple.FamilyCircle", "com.apple.mobilecal.widget" };
             return whiteList.Contains(budleId);
         }
         #endregion
@@ -335,12 +335,61 @@ namespace Change.Service.Services
         /// <param name="budleIds"></param>
         public void DeleteBudleIds(List<string> budleIds, int machineId)
         {
-            budleIds = budleIds.Distinct().ToList(); ;
+            budleIds = budleIds.Distinct().ToList();
             foreach (var item in budleIds)
             {
                 var needToDeleteBudleId = _dbContext.ImpactBudleId.FirstOrDefault(x => x.IsDeleted == false && x.MachineId == machineId && x.BudleId == item);
                 needToDeleteBudleId.IsDeleted = false;
             }
+            _dbContext.SaveChanges();
+        }
+
+        #endregion
+
+
+        #region MachineRecord
+
+        /// <summary>
+        /// 新增改机记录
+        /// </summary>
+        /// <param name="model"></param>
+        public void AddMahineRecord(ChangeRecord entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException("记录不能为空");
+            _dbContext.ChangeRecord.Add(entity);
+            _dbContext.SaveChanges();
+
+        }
+
+        /// <summary>
+        /// 获取记录
+        /// </summary>
+        /// <param name="uuid"></param>
+        /// <returns></returns>
+        public ChangeRecord GetChangeRecord(string uuid, string formateDateString)
+        {
+            if (string.IsNullOrEmpty(uuid) || string.IsNullOrEmpty(formateDateString))
+                throw new ArgumentNullException("uuid不能为空");
+
+            var result = _dbContext.ChangeRecord.
+                FirstOrDefault(x => x.IsDeleted == false && x.UUID == uuid && !x.ReUseRecords.Any(y => y.FormateDateString == formateDateString && y.IsDeleted == false));
+
+            return result;
+        }
+
+        public void AddUseRecord(int changeRecordId)
+        {
+            if (changeRecordId == 0)
+                throw new ArgumentNullException("changeRecordId不能为0");
+
+            var entity = new ReUseRecord()
+            {
+                ChangeRecordId = changeRecordId,
+                FormateDateString=DateTime.Now.ToString("yyyyMMdd"),
+                CreateTime = DateTime.Now
+            };
+            _dbContext.ReUseRecord.Add(entity);
             _dbContext.SaveChanges();
         }
 

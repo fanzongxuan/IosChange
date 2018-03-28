@@ -12,9 +12,10 @@ using System;
 namespace Change.Data.Migrations
 {
     [DbContext(typeof(ChangeDbContext))]
-    partial class ChangeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180328023423_add_formatedate_fileds")]
+    partial class add_formatedate_fileds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

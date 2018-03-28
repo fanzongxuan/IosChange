@@ -119,5 +119,27 @@ namespace Change.Service.Services
         void DeleteBudleIds(List<string> budleIds, int machineId);
 
         #endregion
+
+        #region MachineRecord
+
+        /// <summary>
+        /// 新增改机记录
+        /// </summary>
+        /// <param name="entitiy"></param>
+        void AddMahineRecord(ChangeRecord entitiy);
+
+        /// <summary>
+        /// 获取记录
+        /// </summary>
+        /// <param name="uuid"></param>
+        /// <returns></returns>
+        ChangeRecord GetChangeRecord(string uuid, string formateDateString);
+
+        /// <summary>
+        /// 添加使用记录
+        /// </summary>
+        void AddUseRecord(int changeRecordId);
+
+        #endregion
     }
 }
