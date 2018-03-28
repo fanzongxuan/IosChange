@@ -357,6 +357,7 @@ namespace Change.Service.Services
         {
             if (entity == null)
                 throw new ArgumentNullException("记录不能为空");
+            entity.CreateTime = DateTime.Now;
             _dbContext.ChangeRecord.Add(entity);
             _dbContext.SaveChanges();
 
@@ -373,7 +374,13 @@ namespace Change.Service.Services
                 throw new ArgumentNullException("uuid不能为空");
 
             var result = _dbContext.ChangeRecord.
-                FirstOrDefault(x => x.IsDeleted == false && x.UUID == uuid && !x.ReUseRecords.Any(y => y.FormateDateString == formateDateString && y.IsDeleted == false));
+                FirstOrDefault(x =>
+                               x.IsDeleted == false &&
+                               x.UUID == uuid &&
+                               x.CreateTime.ToString("yyyyMMdd") == formateDateString &&
+                               !x.ReUseRecords.Any(y =>
+                                                   y.CreateTime.ToString("yyyyMMdd") == DateTime.Now.ToString("yyyyMMdd") &&
+                                                   y.IsDeleted == false));
 
             return result;
         }
@@ -383,13 +390,11 @@ namespace Change.Service.Services
             if (changeRecordId == 0)
                 throw new ArgumentNullException("changeRecordId不能为0");
 
-            var formatStr = DateTime.Now.ToString("yyyyMMdd");
-            if (!_dbContext.ReUseRecord.Any(x => x.IsDeleted == false && x.ChangeRecordId == changeRecordId && x.FormateDateString == formatStr))
+            if (!_dbContext.ReUseRecord.Any(x => x.IsDeleted == false && x.ChangeRecordId == changeRecordId && x.CreateTime.ToString("yyyyMMdd") == DateTime.Now.ToString("yyyyMMdd")))
             {
                 var entity = new ReUseRecord()
                 {
                     ChangeRecordId = changeRecordId,
-                    FormateDateString = formatStr,
                     CreateTime = DateTime.Now
                 };
                 _dbContext.ReUseRecord.Add(entity);

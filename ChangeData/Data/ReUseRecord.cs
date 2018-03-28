@@ -15,11 +15,6 @@ namespace Change.Data.Data
         public int ChangeRecordId { get; set; }
 
         /// <summary>
-        /// 格式化时间字符串(20180318)
-        /// </summary>
-        public string FormateDateString { get; set; }
-
-        /// <summary>
         /// 创建时间
         /// </summary>
         public DateTime CreateTime { get; set; }

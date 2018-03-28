@@ -56,6 +56,8 @@ namespace Chane.Api.Controllers
         public ReturnResult<ChangeRecord> GetChangeRecord(string uuid, string formateDate)
         {
             var res = _machineService.GetChangeRecord(uuid, formateDate);
+            if (res == null)
+                throw new Exception("不存在该条件的改机记录或当天已使用过该条改机记录");
             return ReturnResult.Success(res);
         }
 
