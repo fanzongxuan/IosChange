@@ -48,7 +48,7 @@ namespace Change.Web.Controllers
             var result = new DataSourceResult()
             {
                 rows = res,
-                total = res.Count
+                total = res.TotalCount
             };
             return JsonNet(result);
         }
@@ -101,13 +101,13 @@ namespace Change.Web.Controllers
                 int appIdCol = 0;
                 int passwordCol = 0;
 
-                for (int i = 1; i < rowCount; i++)
+                for (int i = 1; i <= colCount; i++)
                 {
-                    if (worksheet.Cells[1, i].Value.ToString() == "AppId")
+                    if (worksheet.Cells[1, i].Value.ToString().Trim().ToLower() == "appid")
                     {
                         appIdCol = i;
                     }
-                    else if (worksheet.Cells[1, i].Value.ToString() == "Password")
+                    else if (worksheet.Cells[1, i].Value.ToString().Trim().ToLower() == "password")
                     {
                         passwordCol = i;
                     }
