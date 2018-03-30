@@ -10,6 +10,7 @@ namespace Chane.Api.Controllers
     /// <summary>
     /// 基控制器
     /// </summary>
+    [Route("api/[controller]/[action]")]
     public class BaseController : Controller
     {
         /// <summary>

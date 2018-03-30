@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "设备列表";
+}
+<environment include="Development">
+    <link rel="stylesheet" href="~/lib/bootstrap-table/dist/bootstrap-table.css" />
+</environment>
+<environment exclude="Development">
+    <link rel="stylesheet" href="~/lib/bootstrap-table/dist/bootstrap-table.min.css" />
+</environment>
+<div class="header padding-top-30">
+    <ol class="breadcrumb">
+        <li>账号管理</li>
+        <li class="active">账号列表</li>
+    </ol>
+
+</div>
+<div id="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="collapsed">筛选条件</a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                                <div class="panel-body enter-search">
+                                    <div class="col-md-2 col-sm-2">
+                                        <div class='input-group date '>
+                                            <input type="text" id="AppId" name="AppId" class="form-control" placeholder="账号名称">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-2">
+                                        <a class="btn btn-primary btn-cons" id="search" href="javascript:void(0);">查询</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <table class="table table-striped table-hover" id="checklist-grid"></table>
+                    <div class="panel-group" id="accordion" style="margin-top:20px">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed">上传账号(包含列名为AppId和Password的xlsx文件)</a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <form enctype="multipart/form-data" method="post" asp-action="Import">
+                                        <div class="col-md-2 col-sm-2">
+                                            <input type="file" name="excelfile" />
+                                        </div>
+                                        <div class="col-md-2 col-sm-2">
+                                            <input type="submit" value="上传" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <environment include="Development">
+        <script src="~/lib/bootstrap-table/dist/bootstrap-table.js"></script>
+        <script src="~/lib/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
+        <script src="~/js/Account/list.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/bootstrap-table-zh.min.js"></script>
+        <script src="~/js/Account/list.js"></script>
+    </environment>
+}

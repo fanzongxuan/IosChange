@@ -15,6 +15,10 @@ namespace Change.Data
 
         public DbSet<ReUseRecord> ReUseRecord { get; set; }
 
+        public DbSet<AppStoreAccount> AppStoreAccount { get; set; }
+
+        public DbSet<AccountUserRecord> AccountUserRecord { get; set; }
+
         public ChangeDbContext(DbContextOptions<ChangeDbContext> options) : base(options)
         {
         }

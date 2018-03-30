@@ -11,6 +11,7 @@ namespace Change.Service.Extensions
         public static void AddMyServices(this IServiceCollection services)
         {
             services.AddScoped<IMachineService, MachineService>();
+            services.AddScoped<IAppStoreAccountService, AppStoreAccountService>();
         }
     }
 }
