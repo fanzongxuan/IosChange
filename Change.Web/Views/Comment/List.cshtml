@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "账户";
+    ViewData["Title"] = "评论列表";
 }
 <environment include="Development">
     <link rel="stylesheet" href="~/lib/bootstrap-table/dist/bootstrap-table.css" />
@@ -9,8 +9,8 @@
 </environment>
 <div class="header padding-top-30">
     <ol class="breadcrumb">
-        <li>账号管理</li>
-        <li class="active">账号列表</li>
+        <li>评论管理</li>
+        <li class="active">评论列表</li>
     </ol>
 
 </div>
@@ -30,7 +30,7 @@
                                 <div class="panel-body enter-search">
                                     <div class="col-md-2 col-sm-2">
                                         <div class='input-group date '>
-                                            <input type="text" id="AppId" name="AppId" class="form-control" placeholder="账号名称">
+                                            <input type="text" id="Title" name="Title" class="form-control" placeholder="标题">
                                         </div>
                                     </div>
                                     <div class="col-md-2 col-sm-2">
@@ -46,7 +46,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed">上传账号(包含列名为AppId和Password的xlsx文件)</a>
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed">上传账号(包含列名为title和content的xlsx文件)</a>
                                 </h4>
                             </div>
                             <div id="collapseTwo" class="panel-collapse collapse in">
@@ -73,10 +73,10 @@
     <environment include="Development">
         <script src="~/lib/bootstrap-table/dist/bootstrap-table.js"></script>
         <script src="~/lib/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
-        <script src="~/js/Account/list.js"></script>
+        <script src="~/js/Comment/list.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="~/js/bootstrap-table-zh.min.js"></script>
-        <script src="~/js/Account/list.js"></script>
+        <script src="~/js/Comment/list.js"></script>
     </environment>
 }

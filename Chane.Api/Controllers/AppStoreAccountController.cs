@@ -75,5 +75,17 @@ namespace Chane.Api.Controllers
             _appStoreAccountService.AddUseRecord(appStoreAccountId);
             return ReturnResult.Success();
         }
+
+        /// <summary>
+        /// 失败比请求回滚
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ReturnResult RollBack(int id)
+        {
+            _appStoreAccountService.RollBack(id);
+            return ReturnResult.Success();
+        }
     }
 }

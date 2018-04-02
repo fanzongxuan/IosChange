@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Change.Common.Core;
+using Change.Common.Extension;
 using Change.Data;
 using Change.Data.Data;
 using Microsoft.EntityFrameworkCore;
@@ -57,7 +58,18 @@ namespace Change.Service.Services
                 query = query.Where(x => x.UseTime <= minUseTime);
             if (maxUseTime.HasValue)
                 query = query.Where(x => x.UseTime >= maxUseTime);
-            var res = query.FirstOrDefault(x => !x.AccountUserRecords.Any(y => y.IsDeleted == false && y.CreateTime.ToString("yyyyMMdd") == DateTime.Now.ToString("yyyyMMdd")));
+
+            AppStoreAccount res;
+            lock ("lock_get_account")
+            {
+                var ids = query.Where(x => !x.AccountUserRecords.Any(y => y.IsDeleted == false && y.CreateTime.ToString("yyyyMMdd") == DateTime.Now.ToString("yyyyMMdd"))).Select(x => x.Id).ToList();
+                Random rm = new Random();
+                int id = rm.Next(ids.Count);
+                res = _dbContext.AppStoreAccount.AsQueryable().FirstOrDefault(x => x.IsDeleted == false && x.Id == id);
+                AddUseRecord(res.Id);
+            }
+            //res = query.FirstOrDefault(x => !x.AccountUserRecords.Any(y => y.IsDeleted == false && y.CreateTime.ToString("yyyyMMdd") == DateTime.Now.ToString("yyyyMMdd")));
+            //AddUseRecord(res.Id);
             return res;
         }
 
@@ -90,5 +102,30 @@ namespace Change.Service.Services
                 queryable = queryable.Where(x => x.AppId.Contains(query.AppId));
             return new PagedList<AppStoreAccount>(queryable, query.PageIndex, query.PageSize);
         }
+
+        /// <summary>
+        /// 记录回滚
+        /// </summary>
+        /// <param name="id"></param>
+        public void RollBack(int id)
+        {
+            if (id == 0)
+                throw new ArgumentNullException("id不能为0");
+
+            var account = _dbContext.AppStoreAccount.AsQueryable().
+                          Include(x=>x.AccountUserRecords).
+                          FirstOrDefault(x => x.IsDeleted == false && x.Id == id);
+            if (account == null)
+                throw new ArgumentNullException($"id为{id}的account不存在");
+            var record = account.AccountUserRecords.FirstOrDefault(x => x.IsDeleted == false && x.CreateTime.ToString("yyyyMMdd") == DateTime.Now.ToString("yyyyMMdd"));
+            if (record != null)
+            {
+                if (account.UseTime > 1)
+                    account.UseTime -= 1;
+                record.IsDeleted = true;
+                _dbContext.SaveChanges();
+            }
+        }
+
     }
 }

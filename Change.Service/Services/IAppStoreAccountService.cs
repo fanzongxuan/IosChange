@@ -41,5 +41,11 @@ namespace Change.Service.Services
         /// <returns></returns>
         IPagedList<AppStoreAccount> QueryAccount(AccountQuery query);
 
+        /// <summary>
+        /// 记录回滚
+        /// </summary>
+        /// <param name="id"></param>
+        void RollBack(int id);
+
     }
 }
