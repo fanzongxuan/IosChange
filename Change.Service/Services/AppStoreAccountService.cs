@@ -64,9 +64,13 @@ namespace Change.Service.Services
                 sql += $" and UseTime<={maxUseTime}";
             sql += " order by rand()";
 
-            var res = _dbContext.Set<AppStoreAccount>().FromSql(sql).FirstOrDefault();
-            if (res != null)
-                AddUseRecord(res.Id);
+            AppStoreAccount res;
+            lock ("get_account")
+            {
+                res = _dbContext.Set<AppStoreAccount>().FromSql(sql).FirstOrDefault();
+                if (res != null)
+                    AddUseRecord(res.Id);
+            }
             return res;
         }
 
