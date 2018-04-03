@@ -47,29 +47,26 @@ namespace Change.Service.Services
             _dbContext.SaveChanges();
         }
 
-        public AppStoreAccount GetRandom(DateTime? startDate, DateTime? endTime, int? minUseTime, int? maxUseTime)
+        public AppStoreAccount GetRandom(DateTime? startDate, DateTime? endDate, int? minUseTime, int? maxUseTime)
         {
-            var query = _dbContext.AppStoreAccount.AsQueryable().Where(x => x.IsDeleted == false);
-            if (startDate.HasValue)
-                query = query.Where(x => x.CreateTime >= startDate);
-            if (endTime.HasValue)
-                query = query.Where(x => x.CreateTime <= endTime);
-            if (minUseTime.HasValue)
-                query = query.Where(x => x.UseTime <= minUseTime);
-            if (maxUseTime.HasValue)
-                query = query.Where(x => x.UseTime >= maxUseTime);
+            var sql = "select* from appstoreaccount " +
+                "where isdeleted = false and id " +
+                "not in (select AppStoreAccountId from accountuserrecord " +
+                "where date_format(CreateTime, '%Y%m%d') = date_format(now(), '%Y%m%d') and isdeleted = false group by AppStoreAccountId) ";
 
-            AppStoreAccount res;
-            lock ("lock_get_account")
-            {
-                var ids = query.Where(x => !x.AccountUserRecords.Any(y => y.IsDeleted == false && y.CreateTime.ToString("yyyyMMdd") == DateTime.Now.ToString("yyyyMMdd"))).Select(x => x.Id).ToList();
-                Random rm = new Random();
-                int id = rm.Next(ids.Count);
-                res = _dbContext.AppStoreAccount.AsQueryable().FirstOrDefault(x => x.IsDeleted == false && x.Id == id);
+            if (startDate.HasValue)
+                sql += $" and CreateTime>='{startDate}'";
+            if (endDate.HasValue)
+                sql += $" and CreateTime<='{endDate}'";
+            if (minUseTime.HasValue)
+                sql += $" and UseTime>={minUseTime}";
+            if (maxUseTime.HasValue)
+                sql += $" and UseTime<={maxUseTime}";
+            sql += " order by rand()";
+
+            var res = _dbContext.Set<AppStoreAccount>().FromSql(sql).FirstOrDefault();
+            if (res != null)
                 AddUseRecord(res.Id);
-            }
-            //res = query.FirstOrDefault(x => !x.AccountUserRecords.Any(y => y.IsDeleted == false && y.CreateTime.ToString("yyyyMMdd") == DateTime.Now.ToString("yyyyMMdd")));
-            //AddUseRecord(res.Id);
             return res;
         }
 
@@ -113,7 +110,7 @@ namespace Change.Service.Services
                 throw new ArgumentNullException("id不能为0");
 
             var account = _dbContext.AppStoreAccount.AsQueryable().
-                          Include(x=>x.AccountUserRecords).
+                          Include(x => x.AccountUserRecords).
                           FirstOrDefault(x => x.IsDeleted == false && x.Id == id);
             if (account == null)
                 throw new ArgumentNullException($"id为{id}的account不存在");
