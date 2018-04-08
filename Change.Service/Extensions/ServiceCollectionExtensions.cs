@@ -13,6 +13,7 @@ namespace Change.Service.Extensions
             services.AddScoped<IMachineService, MachineService>();
             services.AddScoped<IAppStoreAccountService, AppStoreAccountService>();
             services.AddScoped<ICommentsService, CommentsService>();
+            services.AddScoped<IProductionRecordService, ProductionRecordService>();
         }
     }
 }

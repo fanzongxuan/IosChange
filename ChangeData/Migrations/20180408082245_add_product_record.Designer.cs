@@ -12,9 +12,10 @@ using System;
 namespace Change.Data.Migrations
 {
     [DbContext(typeof(ChangeDbContext))]
-    partial class ChangeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180408082245_add_product_record")]
+    partial class add_product_record
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,7 +104,7 @@ namespace Change.Data.Migrations
                     b.ToTable("Comment");
                 });
 
-            modelBuilder.Entity("Change.Data.Data.DaliyProduction", b =>
+            modelBuilder.Entity("Change.Data.Data.DaliyProductionRecord", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -114,8 +115,6 @@ namespace Change.Data.Migrations
                     b.Property<bool>("IsDeleted");
 
                     b.Property<int>("ProductionRecordId");
-
-                    b.Property<int>("TargetTimes");
 
                     b.Property<int>("Times");
 
@@ -275,7 +274,7 @@ namespace Change.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Change.Data.Data.DaliyProduction", b =>
+            modelBuilder.Entity("Change.Data.Data.DaliyProductionRecord", b =>
                 {
                     b.HasOne("Change.Data.Data.ProductionRecord")
                         .WithMany("DailyProductionRecords")

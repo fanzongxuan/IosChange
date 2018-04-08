@@ -18,8 +18,12 @@ namespace Change.Data
         public DbSet<AppStoreAccount> AppStoreAccount { get; set; }
 
         public DbSet<AccountUserRecord> AccountUserRecord { get; set; }
-        
+
         public DbSet<Comment> Comment { get; set; }
+
+        public DbSet<ProductionRecord> ProductionRecord { get; set; }
+
+        public DbSet<DaliyProduction> DailyProductionRecord { get; set; }
 
         public ChangeDbContext(DbContextOptions<ChangeDbContext> options) : base(options)
         {
