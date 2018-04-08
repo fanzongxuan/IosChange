@@ -52,7 +52,7 @@ namespace Change.Service.Services
             var sql = "select* from appstoreaccount " +
                 "where isdeleted = false and id " +
                 "not in (select AppStoreAccountId from accountuserrecord " +
-                "where date_format(CreateTime, '%Y%m%d') = date_format(now(), '%Y%m%d') and isdeleted = false group by AppStoreAccountId) ";
+                "where TIMESTAMPDIFF(DAY,CreateTime,now())<=7 and isdeleted = false group by AppStoreAccountId) ";
 
             if (startDate.HasValue)
                 sql += $" and CreateTime>='{startDate}'";
