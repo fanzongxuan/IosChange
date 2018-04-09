@@ -50,12 +50,12 @@ namespace Chane.Api.Controllers
         }
 
         /// <summary>
-        /// 添加
+        /// 不存在添加
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ReturnResult<ProductionRecord> Insert(AddProductionRecordModel model)
+        public ReturnResult<ProductionRecord> InsertIfNotAExist(AddProductionRecordModel model)
         {
             var entitiy = new ProductionRecord()
             {

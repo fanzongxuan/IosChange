@@ -84,9 +84,18 @@ namespace Change.Service.Services
             if (entity == null)
                 throw new ArgumentNullException("entitiy不能为空");
 
-            entity.CreateTime = DateTime.Now;
-            _dbContext.ProductionRecord.Add(entity);
-            _dbContext.SaveChanges();
+            var record = GetByBudleId(entity.BundleId);
+
+            if (record == null)
+            {
+                entity.CreateTime = DateTime.Now;
+                _dbContext.ProductionRecord.Add(entity);
+                _dbContext.SaveChanges();
+            }
+            else
+            {
+                entity = record;
+            }
         }
 
         public IPagedList<ProductionRecord> Query(ProductionRecordQuery qeury)
