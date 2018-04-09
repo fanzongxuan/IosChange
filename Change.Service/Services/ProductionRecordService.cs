@@ -55,10 +55,8 @@ namespace Change.Service.Services
             if (entity == null)
                 throw new ArgumentNullException($"不存在id为{id}的记录");
 
-            entity.IsDeleted = false;
+            entity.IsDeleted = true;
             _dbContext.SaveChanges();
-
-            throw new NotImplementedException();
         }
 
         public void DeleteDaliyRecord(int id)
